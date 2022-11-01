@@ -1,7 +1,7 @@
 {
   "name": "Salesforce Lead Sync [RECIPE CICD]",
   "description": "When there is a trigger event, do action",
-  "version": 4,
+  "version": 7,
   "private": true,
   "concurrency": 1,
   "code": {
@@ -158,592 +158,656 @@
     "block": [
       {
         "number": 1,
-        "provider": "salesforce",
-        "name": "create_custom_object",
-        "as": "fd4a1499",
-        "title": "Create Lead",
-        "description": "Create <span class=\"provider\">Lead</span> in <span class=\"provider\">Salesforce</span>",
+        "provider": "logger",
+        "name": "log_message",
+        "as": "c0749a4e",
+        "title": null,
+        "description": "Log <span class=\"provider\">message</span> to <span class=\"provider\">Job report</span>",
         "keyword": "action",
         "dynamicPickListSelection": {
-          "sobject_name": "Lead"
         },
         "toggleCfg": {
         },
         "input": {
-          "sobject_name": "Lead",
-          "Company": "#{_('data.google_sheets.b4fd684b.columns.col_2')}",
-          "LastName": "=_('data.google_sheets.b4fd684b.columns.col_1').split(\" \").last()"
+          "message": "#{_('data.google_sheets.b4fd684b.columns.col_1')}"
         },
-        "extended_input_schema": [
+        "comment": "extra logging to see the incoming lead debug",
+        "uuid": "20cfec7d-ff1d-4a66-bd73-081751222b18"
+      },
+      {
+        "number": 2,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
           {
-            "control_type": "text",
-            "custom": false,
-            "label": "Company",
-            "name": "Company",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "Last Name",
-            "name": "LastName",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "hint": "Leave empty to apply default assignment rules; enter special value <b>false</b> to apply no rules; or pass in specific rule ID",
-            "label": "Assignment rule ID",
-            "name": "assignment_rule_id",
-            "optional": true,
-            "type": "string"
-          },
-          {
-            "control_type": "number",
-            "custom": false,
-            "label": "Annual Revenue",
-            "name": "AnnualRevenue",
-            "optional": true,
-            "type": "number",
-            "parse_output": "float_conversion",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "City",
-            "name": "City",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "select",
-            "custom": false,
-            "label": "Clean Status",
-            "name": "CleanStatus",
-            "optional": true,
-            "pick_list": "sobject_field_values_list",
-            "pick_list_params": {
-              "sobject_name": "\"Lead\""
+            "number": 3,
+            "provider": "salesforce",
+            "name": "create_custom_object",
+            "as": "fd4a1499",
+            "title": "Create Lead",
+            "description": "Create <span class=\"provider\">Lead</span> in <span class=\"provider\">Salesforce</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "sobject_name": "Lead"
             },
-            "toggle_field": {
-              "control_type": "text",
-              "label": "Clean Status",
-              "toggle_hint": "Enter custom value",
-              "optional": true,
-              "custom": false,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "string",
-              "name": "CleanStatus"
+            "toggleCfg": {
             },
-            "toggle_hint": "Select from list",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "Company D-U-N-S Number",
-            "name": "CompanyDunsNumber",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "checkbox",
-            "custom": false,
-            "label": "Converted",
-            "name": "IsConverted",
-            "optional": true,
-            "toggle_field": {
-              "label": "Converted",
-              "control_type": "text",
-              "toggle_hint": "Use custom value",
-              "optional": true,
-              "custom": false,
-              "sfdc_createable": true,
-              "sfdc_updateable": false,
-              "type": "boolean",
-              "name": "IsConverted"
+            "input": {
+              "sobject_name": "Lead",
+              "Company": "#{_('data.google_sheets.b4fd684b.columns.col_2')}",
+              "LastName": "=_('data.google_sheets.b4fd684b.columns.col_1').split(\" \").last()"
             },
-            "toggle_hint": "Select from option list",
-            "type": "boolean",
-            "parse_output": {
+            "extended_input_schema": [
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Company",
+                "name": "Company",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Last Name",
+                "name": "LastName",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "hint": "Leave empty to apply default assignment rules; enter special value <b>false</b> to apply no rules; or pass in specific rule ID",
+                "label": "Assignment rule ID",
+                "name": "assignment_rule_id",
+                "optional": true,
+                "type": "string"
+              },
+              {
+                "control_type": "number",
+                "custom": false,
+                "label": "Annual Revenue",
+                "name": "AnnualRevenue",
+                "optional": true,
+                "type": "number",
+                "parse_output": "float_conversion",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "City",
+                "name": "City",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "select",
+                "custom": false,
+                "label": "Clean Status",
+                "name": "CleanStatus",
+                "optional": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"Lead\""
+                },
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Clean Status",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "CleanStatus"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Company D-U-N-S Number",
+                "name": "CompanyDunsNumber",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "checkbox",
+                "custom": false,
+                "label": "Converted",
+                "name": "IsConverted",
+                "optional": true,
+                "toggle_field": {
+                  "label": "Converted",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": false,
+                  "type": "boolean",
+                  "name": "IsConverted"
+                },
+                "toggle_hint": "Select from option list",
+                "type": "boolean",
+                "parse_output": {
+                },
+                "render_input": {
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Country",
+                "name": "Country",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "D&B Company ID",
+                "name": "DandbCompanyId",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Data.com Key",
+                "name": "Jigsaw",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text-area",
+                "custom": false,
+                "label": "Description",
+                "name": "Description",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Email",
+                "name": "Email",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "number",
+                "custom": false,
+                "label": "Employees",
+                "name": "NumberOfEmployees",
+                "optional": true,
+                "type": "integer",
+                "parse_output": "integer_conversion",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "phone",
+                "custom": false,
+                "label": "Fax",
+                "name": "Fax",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "First Name",
+                "name": "FirstName",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "select",
+                "custom": false,
+                "label": "Geocode Accuracy",
+                "name": "GeocodeAccuracy",
+                "optional": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"Lead\""
+                },
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Geocode Accuracy",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "GeocodeAccuracy"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Individual ID",
+                "name": "IndividualId",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "select",
+                "custom": false,
+                "label": "Industry",
+                "name": "Industry",
+                "optional": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"Lead\""
+                },
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Industry",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "Industry"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "number",
+                "custom": false,
+                "label": "Latitude",
+                "name": "Latitude",
+                "optional": true,
+                "type": "number",
+                "parse_output": "float_conversion",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "select",
+                "custom": false,
+                "label": "Lead Source",
+                "name": "LeadSource",
+                "optional": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"Lead\""
+                },
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Lead Source",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "LeadSource"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "number",
+                "custom": false,
+                "label": "Longitude",
+                "name": "Longitude",
+                "optional": true,
+                "type": "number",
+                "parse_output": "float_conversion",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "phone",
+                "custom": false,
+                "label": "Mobile Phone",
+                "name": "MobilePhone",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Owner ID",
+                "name": "OwnerId",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "phone",
+                "custom": false,
+                "label": "Phone",
+                "name": "Phone",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "select",
+                "custom": false,
+                "label": "Rating",
+                "name": "Rating",
+                "optional": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"Lead\""
+                },
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Rating",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "Rating"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "select",
+                "custom": false,
+                "label": "Salutation",
+                "name": "Salutation",
+                "optional": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"Lead\""
+                },
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Salutation",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "Salutation"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "State/Province",
+                "name": "State",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "select",
+                "custom": false,
+                "label": "Status",
+                "name": "Status",
+                "optional": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"Lead\""
+                },
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Status",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "Status"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text-area",
+                "custom": false,
+                "label": "Street",
+                "name": "Street",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Title",
+                "name": "Title",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "checkbox",
+                "custom": false,
+                "label": "Unread By Owner",
+                "name": "IsUnreadByOwner",
+                "optional": true,
+                "toggle_field": {
+                  "label": "Unread By Owner",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "boolean",
+                  "name": "IsUnreadByOwner"
+                },
+                "toggle_hint": "Select from option list",
+                "type": "boolean",
+                "parse_output": {
+                },
+                "render_input": {
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "url",
+                "custom": false,
+                "label": "Website",
+                "name": "Website",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": false,
+                "label": "Zip/Postal Code",
+                "name": "PostalCode",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": true,
+                "label": "Current Generator(s)",
+                "name": "CurrentGenerators__c",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "number",
+                "custom": true,
+                "label": "Number of Locations",
+                "name": "NumberofLocations__c",
+                "optional": true,
+                "type": "number",
+                "parse_output": "float_conversion",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "select",
+                "custom": true,
+                "label": "Primary",
+                "name": "Primary__c",
+                "optional": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"Lead\""
+                },
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Primary",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "Primary__c"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "select",
+                "custom": true,
+                "label": "Product Interest",
+                "name": "ProductInterest__c",
+                "optional": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"Lead\""
+                },
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Product Interest",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "ProductInterest__c"
+                },
+                "toggle_hint": "Select from list",
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "control_type": "text",
+                "custom": true,
+                "label": "SIC Code",
+                "name": "SICCode__c",
+                "optional": true,
+                "type": "string",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              }
+            ],
+            "uuid": "5bcf02d4-14e5-48d9-bd16-574b490c137f"
+          },
+          {
+            "number": 4,
+            "as": "4f652db3",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
             },
-            "render_input": {
+            "toggleCfg": {
             },
-            "sfdc_createable": true,
-            "sfdc_updateable": false
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "Country",
-            "name": "Country",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "D&B Company ID",
-            "name": "DandbCompanyId",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "Data.com Key",
-            "name": "Jigsaw",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text-area",
-            "custom": false,
-            "label": "Description",
-            "name": "Description",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "Email",
-            "name": "Email",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "number",
-            "custom": false,
-            "label": "Employees",
-            "name": "NumberOfEmployees",
-            "optional": true,
-            "type": "integer",
-            "parse_output": "integer_conversion",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "phone",
-            "custom": false,
-            "label": "Fax",
-            "name": "Fax",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "First Name",
-            "name": "FirstName",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "select",
-            "custom": false,
-            "label": "Geocode Accuracy",
-            "name": "GeocodeAccuracy",
-            "optional": true,
-            "pick_list": "sobject_field_values_list",
-            "pick_list_params": {
-              "sobject_name": "\"Lead\""
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
             },
-            "toggle_field": {
-              "control_type": "text",
-              "label": "Geocode Accuracy",
-              "toggle_hint": "Enter custom value",
-              "optional": true,
-              "custom": false,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "string",
-              "name": "GeocodeAccuracy"
-            },
-            "toggle_hint": "Select from list",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "Individual ID",
-            "name": "IndividualId",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "select",
-            "custom": false,
-            "label": "Industry",
-            "name": "Industry",
-            "optional": true,
-            "pick_list": "sobject_field_values_list",
-            "pick_list_params": {
-              "sobject_name": "\"Lead\""
-            },
-            "toggle_field": {
-              "control_type": "text",
-              "label": "Industry",
-              "toggle_hint": "Enter custom value",
-              "optional": true,
-              "custom": false,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "string",
-              "name": "Industry"
-            },
-            "toggle_hint": "Select from list",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "number",
-            "custom": false,
-            "label": "Latitude",
-            "name": "Latitude",
-            "optional": true,
-            "type": "number",
-            "parse_output": "float_conversion",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "select",
-            "custom": false,
-            "label": "Lead Source",
-            "name": "LeadSource",
-            "optional": true,
-            "pick_list": "sobject_field_values_list",
-            "pick_list_params": {
-              "sobject_name": "\"Lead\""
-            },
-            "toggle_field": {
-              "control_type": "text",
-              "label": "Lead Source",
-              "toggle_hint": "Enter custom value",
-              "optional": true,
-              "custom": false,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "string",
-              "name": "LeadSource"
-            },
-            "toggle_hint": "Select from list",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "number",
-            "custom": false,
-            "label": "Longitude",
-            "name": "Longitude",
-            "optional": true,
-            "type": "number",
-            "parse_output": "float_conversion",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "phone",
-            "custom": false,
-            "label": "Mobile Phone",
-            "name": "MobilePhone",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "Owner ID",
-            "name": "OwnerId",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "phone",
-            "custom": false,
-            "label": "Phone",
-            "name": "Phone",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "select",
-            "custom": false,
-            "label": "Rating",
-            "name": "Rating",
-            "optional": true,
-            "pick_list": "sobject_field_values_list",
-            "pick_list_params": {
-              "sobject_name": "\"Lead\""
-            },
-            "toggle_field": {
-              "control_type": "text",
-              "label": "Rating",
-              "toggle_hint": "Enter custom value",
-              "optional": true,
-              "custom": false,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "string",
-              "name": "Rating"
-            },
-            "toggle_hint": "Select from list",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "select",
-            "custom": false,
-            "label": "Salutation",
-            "name": "Salutation",
-            "optional": true,
-            "pick_list": "sobject_field_values_list",
-            "pick_list_params": {
-              "sobject_name": "\"Lead\""
-            },
-            "toggle_field": {
-              "control_type": "text",
-              "label": "Salutation",
-              "toggle_hint": "Enter custom value",
-              "optional": true,
-              "custom": false,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "string",
-              "name": "Salutation"
-            },
-            "toggle_hint": "Select from list",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "State/Province",
-            "name": "State",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "select",
-            "custom": false,
-            "label": "Status",
-            "name": "Status",
-            "optional": true,
-            "pick_list": "sobject_field_values_list",
-            "pick_list_params": {
-              "sobject_name": "\"Lead\""
-            },
-            "toggle_field": {
-              "control_type": "text",
-              "label": "Status",
-              "toggle_hint": "Enter custom value",
-              "optional": true,
-              "custom": false,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "string",
-              "name": "Status"
-            },
-            "toggle_hint": "Select from list",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text-area",
-            "custom": false,
-            "label": "Street",
-            "name": "Street",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "Title",
-            "name": "Title",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "checkbox",
-            "custom": false,
-            "label": "Unread By Owner",
-            "name": "IsUnreadByOwner",
-            "optional": true,
-            "toggle_field": {
-              "label": "Unread By Owner",
-              "control_type": "text",
-              "toggle_hint": "Use custom value",
-              "optional": true,
-              "custom": false,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "boolean",
-              "name": "IsUnreadByOwner"
-            },
-            "toggle_hint": "Select from option list",
-            "type": "boolean",
-            "parse_output": {
-            },
-            "render_input": {
-            },
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "url",
-            "custom": false,
-            "label": "Website",
-            "name": "Website",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": false,
-            "label": "Zip/Postal Code",
-            "name": "PostalCode",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": true,
-            "label": "Current Generator(s)",
-            "name": "CurrentGenerators__c",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "number",
-            "custom": true,
-            "label": "Number of Locations",
-            "name": "NumberofLocations__c",
-            "optional": true,
-            "type": "number",
-            "parse_output": "float_conversion",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "select",
-            "custom": true,
-            "label": "Primary",
-            "name": "Primary__c",
-            "optional": true,
-            "pick_list": "sobject_field_values_list",
-            "pick_list_params": {
-              "sobject_name": "\"Lead\""
-            },
-            "toggle_field": {
-              "control_type": "text",
-              "label": "Primary",
-              "toggle_hint": "Enter custom value",
-              "optional": true,
-              "custom": true,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "string",
-              "name": "Primary__c"
-            },
-            "toggle_hint": "Select from list",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "select",
-            "custom": true,
-            "label": "Product Interest",
-            "name": "ProductInterest__c",
-            "optional": true,
-            "pick_list": "sobject_field_values_list",
-            "pick_list_params": {
-              "sobject_name": "\"Lead\""
-            },
-            "toggle_field": {
-              "control_type": "text",
-              "label": "Product Interest",
-              "toggle_hint": "Enter custom value",
-              "optional": true,
-              "custom": true,
-              "sfdc_createable": true,
-              "sfdc_updateable": true,
-              "type": "string",
-              "name": "ProductInterest__c"
-            },
-            "toggle_hint": "Select from list",
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
-          },
-          {
-            "control_type": "text",
-            "custom": true,
-            "label": "SIC Code",
-            "name": "SICCode__c",
-            "optional": true,
-            "type": "string",
-            "sfdc_createable": true,
-            "sfdc_updateable": true
+            "block": [
+              {
+                "number": 5,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "875981ea",
+                "title": null,
+                "description": "Log <span class=\"provider\">message</span> to <span class=\"provider\">Job report</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "#{_('data.catch.4f652db3.message')}"
+                },
+                "uuid": "d4fecf63-1d58-4e11-9bd6-5cbc19f47c3b"
+              }
+            ],
+            "uuid": "201ca460-2b83-464f-8a1c-112796759b7f"
           }
         ],
-        "uuid": "5bcf02d4-14e5-48d9-bd16-574b490c137f"
+        "uuid": "e78d2c26-7dc2-4e80-a536-3bddb65c6167"
       }
     ],
     "uuid": "625f0655-6168-4a24-8e30-2b33c8bff036"
@@ -768,6 +832,12 @@
         "name": "Salesforce CICD",
         "folder": "CICD Demo Dev"
       }
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
     }
   ]
 }
